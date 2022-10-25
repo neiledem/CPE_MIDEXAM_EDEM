@@ -1,0 +1,40 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install updates (Centos)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+- hosts: Server1
+  become: true
+  roles:
+    - Server1
+
+
+- hosts: Server2
+  become: true
+  roles:
+    - Server2
+
+- hosts: Server3
+  become: true
+  roles:
+    - Server3
+
+- hosts: CentOS 
+  become: true
+  roles:
+    - CentOS
